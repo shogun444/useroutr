@@ -18,24 +18,29 @@ export function WaitlistModal({ open, onOpenChange }: WaitlistModalProps) {
 
   useGSAP(() => {
     if (open) {
-      // Reveal animation
       const tl = gsap.timeline();
-      tl.fromTo(overlayRef.current, 
-        { opacity: 0 }, 
+      tl.fromTo(
+        overlayRef.current,
+        { opacity: 0 },
         { opacity: 1, duration: 0.4, ease: "power2.out" }
       );
-      tl.fromTo(contentRef.current,
+      tl.fromTo(
+        contentRef.current,
         { scale: 0.9, opacity: 0, y: 20 },
         { scale: 1, opacity: 1, y: 0, duration: 0.6, ease: "expo.out" },
         "-=0.2"
       );
-      tl.from(".modal-item", {
-        opacity: 0,
-        y: 10,
-        stagger: 0.1,
-        duration: 0.4,
-        ease: "power2.out"
-      }, "-=0.3");
+      tl.from(
+        ".modal-item",
+        {
+          opacity: 0,
+          y: 10,
+          stagger: 0.08,
+          duration: 0.4,
+          ease: "power2.out",
+        },
+        "-=0.3"
+      );
     }
   }, [open]);
 
@@ -48,22 +53,26 @@ export function WaitlistModal({ open, onOpenChange }: WaitlistModalProps) {
         />
         <Dialog.Popup
           ref={contentRef}
-          className="fixed left-1/2 top-1/2 z-2001 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 outline-none p-1"
+          className="fixed left-1/2 top-1/2 z-2001 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 outline-none p-4 sm:p-1"
         >
-          <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-zinc-950 p-8 shadow-2xl">
-            {/* Background elements */}
+          <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-white/10 bg-zinc-950 p-6 sm:p-8 shadow-2xl">
+            {/* Decorative elements */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-px bg-linear-to-r from-transparent via-white/20 to-transparent" />
             <div className="absolute -inset-px bg-linear-to-b from-white/5 to-transparent rounded-[inherit] -z-10" />
 
             {/* Header */}
-            <div className="flex justify-between items-start mb-10">
+            <div className="flex justify-between items-start mb-8 sm:mb-10">
               <div className="flex items-center gap-3 modal-item">
                 <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10">
                   <ShieldCheck size={20} className="text-zinc-400" />
                 </div>
                 <div>
-                  <h2 className="font-display font-bold text-xl text-white">Join the Waitlist</h2>
-                  <p className="font-mono text-[9px] uppercase tracking-widest text-zinc-600">Reserved for Early Adopters</p>
+                  <h2 className="font-display font-bold text-lg sm:text-xl text-white">
+                    Get Early Access
+                  </h2>
+                  <p className="font-mono text-[10px] sm:text-[11px] uppercase tracking-widest text-zinc-600">
+                    Limited spots available
+                  </p>
                 </div>
               </div>
               <Dialog.Close className="modal-item p-2 rounded-lg hover:bg-white/5 transition-colors text-zinc-600 hover:text-white">
@@ -72,36 +81,61 @@ export function WaitlistModal({ open, onOpenChange }: WaitlistModalProps) {
             </div>
 
             {/* Form */}
-            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+            <form
+              className="space-y-5 sm:space-y-6"
+              onSubmit={(e) => e.preventDefault()}
+            >
               <div className="modal-item space-y-2">
-                <label className="font-mono text-[10px] uppercase tracking-widest text-zinc-500 block px-1">Institutional Email</label>
+                <label className="font-mono text-[11px] sm:text-xs uppercase tracking-widest text-zinc-500 block px-1">
+                  Work Email
+                </label>
                 <div className="relative">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-700" size={18} />
-                  <input 
-                    type="email" 
-                    placeholder="name@company.com"
-                    className="w-full h-14 bg-white/2 border border-white/5 rounded-2xl pl-12 pr-6 font-display text-white placeholder:text-zinc-800 focus:outline-none focus:border-white/20 transition-all focus:bg-white/5"
+                  <Mail
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-700"
+                    size={18}
+                  />
+                  <input
+                    type="email"
+                    placeholder="you@company.com"
+                    className="w-full h-12 sm:h-14 bg-white/2 border border-white/5 rounded-xl sm:rounded-2xl pl-12 pr-6 font-display text-white placeholder:text-zinc-800 focus:outline-none focus:border-white/20 transition-all focus:bg-white/5 text-sm sm:text-base"
                   />
                 </div>
               </div>
 
               <div className="modal-item space-y-2">
-                <label className="font-mono text-[10px] uppercase tracking-widest text-zinc-500 block px-1">What are you building?</label>
-                <select className="w-full h-14 bg-white/2 border border-white/5 rounded-2xl px-6 font-display text-white focus:outline-none focus:border-white/20 transition-all focus:bg-white/5 appearance-none cursor-pointer">
-                  <option className="bg-zinc-950">Cross-border Payments</option>
-                  <option className="bg-zinc-950">RWA Tokenization</option>
-                  <option className="bg-zinc-950">DeFi Protocol</option>
-                  <option className="bg-zinc-950">Market Maker</option>
+                <label className="font-mono text-[11px] sm:text-xs uppercase tracking-widest text-zinc-500 block px-1">
+                  What are you building?
+                </label>
+                <select className="w-full h-12 sm:h-14 bg-white/2 border border-white/5 rounded-xl sm:rounded-2xl px-4 sm:px-6 font-display text-white focus:outline-none focus:border-white/20 transition-all focus:bg-white/5 appearance-none cursor-pointer text-sm sm:text-base">
+                  <option className="bg-zinc-950">
+                    E-commerce / Marketplace
+                  </option>
+                  <option className="bg-zinc-950">
+                    Cross-border Payments
+                  </option>
+                  <option className="bg-zinc-950">Fintech Application</option>
+                  <option className="bg-zinc-950">DeFi / Web3 Product</option>
+                  <option className="bg-zinc-950">Other</option>
                 </select>
               </div>
 
-              <div className="modal-item pt-4">
-                <Button variant="primary" className="w-full h-14 rounded-2xl text-base group" onClick={() => onOpenChange(false)}>
+              <div className="modal-item pt-2 sm:pt-4">
+                <Button
+                  variant="primary"
+                  className="w-full h-12 sm:h-14 rounded-xl sm:rounded-2xl text-sm sm:text-base group"
+                  onClick={() => onOpenChange(false)}
+                >
                   Request Access
-                  <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+                  <ArrowRight
+                    size={18}
+                    className="transition-transform group-hover:translate-x-1"
+                  />
                 </Button>
-                <p className="text-center font-mono text-[9px] text-zinc-700 mt-4 uppercase tracking-tighter">
-                  By requesting access, you agree to our <span className="text-zinc-500 underline cursor-pointer">Institutional Terms</span>
+                <p className="text-center font-mono text-[10px] sm:text-[11px] text-zinc-700 mt-3 sm:mt-4 uppercase tracking-wider">
+                  By requesting access, you agree to our{" "}
+                  <span className="text-zinc-500 underline cursor-pointer">
+                    Terms of Service
+                  </span>
                 </p>
               </div>
             </form>

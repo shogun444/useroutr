@@ -1,17 +1,17 @@
 "use client";
+
 import { cn } from "@/lib/utils";
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
-import { 
-  CreditCard, 
-  Globe, 
-  FileText, 
-  RefreshCw, 
-  Palette,
+import {
+  CreditCard,
+  Globe,
+  FileText,
+  RefreshCw,
+  Link2,
   CheckCircle2,
   ArrowRightLeft,
-  Settings,
-  ArrowUpRight
+  ArrowUpRight,
 } from "lucide-react";
 import Link from "next/link";
 import gsap from "gsap";
@@ -24,69 +24,78 @@ export function ProductsSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    // 1. Staggered Entrance for Bento Grid
-    gsap.from(".bento-item", {
-      opacity: 0,
-      y: 50,
-      scale: 0.9,
-      stagger: 0.1,
-      duration: 1,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: gridRef.current,
-        start: "top 80%",
-      }
-    });
-
-    // 2. 3D Tilt Effect on Hover
-    const items = gsap.utils.toArray<HTMLElement>(".bento-item");
-    items.forEach((item) => {
-      item.addEventListener("mousemove", (e) => {
-        const rect = item.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = (y - centerY) / 10;
-        const rotateY = (centerX - x) / 10;
-
-        gsap.to(item, {
-          rotateX: rotateX,
-          rotateY: rotateY,
-          scale: 1.02,
-          duration: 0.5,
-          ease: "power2.out",
-          overwrite: "auto"
-        });
+  useGSAP(
+    () => {
+      gsap.from(".bento-item", {
+        opacity: 0,
+        y: 40,
+        scale: 0.95,
+        stagger: 0.1,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: gridRef.current,
+          start: "top 85%",
+        },
       });
 
-      item.addEventListener("mouseleave", () => {
-        gsap.to(item, {
-          rotateX: 0,
-          rotateY: 0,
-          scale: 1,
-          duration: 0.5,
-          ease: "power2.out",
-          overwrite: "auto"
-        });
+      const items = gsap.utils.toArray<HTMLElement>(".bento-item");
+      items.forEach((item) => {
+        const onMouseMove = (e: MouseEvent) => {
+          const rect = item.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = (y - centerY) / 12;
+          const rotateY = (centerX - x) / 12;
+
+          gsap.to(item, {
+            rotateX,
+            rotateY,
+            scale: 1.02,
+            duration: 0.5,
+            ease: "power2.out",
+            overwrite: "auto",
+          });
+        };
+
+        const onMouseLeave = () => {
+          gsap.to(item, {
+            rotateX: 0,
+            rotateY: 0,
+            scale: 1,
+            duration: 0.5,
+            ease: "power2.out",
+            overwrite: "auto",
+          });
+        };
+
+        item.addEventListener("mousemove", onMouseMove);
+        item.addEventListener("mouseleave", onMouseLeave);
       });
-    });
-  }, { scope: containerRef });
+    },
+    { scope: containerRef }
+  );
 
   return (
-    <section ref={containerRef} className="py-24 bg-black relative overflow-hidden border-t border-white/5">
-      <div className="container px-4 mx-auto relative z-10">
-        <div className="max-w-3xl mb-16">
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">
-            Core Product <br />
-            <span className="text-zinc-600 italic font-light">Modules.</span>
+    <section
+      id="products"
+      ref={containerRef}
+      className="py-20 sm:py-28 lg:py-32 bg-black relative overflow-hidden border-t border-white/5"
+    >
+      <div className="container px-6 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 mx-auto relative z-10">
+        <div className="max-w-3xl mb-12 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-white mb-4 sm:mb-6 tracking-tight">
+            Everything you need <br className="hidden sm:block" />
+            <span className="text-zinc-600 italic font-light">to move money globally.</span>
           </h2>
-          <p className="text-xl text-zinc-500 font-mono tracking-tight">
-            Independent layers of institutional payment infrastructure, unified by one API.
+          <p className="text-base sm:text-lg lg:text-xl text-zinc-500 font-sans max-w-xl">
+            Five products. One unified API. Accept payments, send payouts, and
+            bridge currencies — all through a single integration.
           </p>
         </div>
-        
+
         <div ref={gridRef}>
           <BentoGrid className="mx-auto md:auto-rows-[20rem]">
             {products.map((item, i) => (
@@ -99,12 +108,12 @@ export function ProductsSection() {
                   icon={item.icon}
                 />
                 {item.slug && (
-                  <Link 
+                  <Link
                     href={`/products/${item.slug}`}
                     className="absolute inset-0 z-30 flex items-center justify-center opacity-0 group-hover/tile:opacity-100 transition-opacity bg-black/40 backdrop-blur-[2px] rounded-xl"
                   >
                     <div className="bg-white text-black px-6 py-2 rounded-full font-display font-bold text-sm flex items-center gap-2 transform translate-y-4 group-hover/tile:translate-y-0 transition-transform">
-                      Explore Flow
+                      Learn More
                       <ArrowUpRight size={16} />
                     </div>
                   </Link>
@@ -120,19 +129,22 @@ export function ProductsSection() {
 
 const SkeletonCheckout = () => {
   const iconRef = useRef(null);
-  
-  useGSAP(() => {
-    gsap.to(iconRef.current, {
-      y: -5,
-      repeat: -1,
-      yoyo: true,
-      duration: 1.5,
-      ease: "power1.inOut"
-    });
-  }, { scope: iconRef });
+
+  useGSAP(
+    () => {
+      gsap.to(iconRef.current, {
+        y: -5,
+        repeat: -1,
+        yoyo: true,
+        duration: 1.5,
+        ease: "power1.inOut",
+      });
+    },
+    { scope: iconRef }
+  );
 
   return (
-    <div className="flex flex-1 w-full h-full min-h-24 bg-clear flex-col space-y-2 justify-center items-center">
+    <div className="flex flex-1 w-full h-full min-h-24 flex-col space-y-2 justify-center items-center">
       <div
         ref={iconRef}
         className="flex flex-row rounded-2xl border border-white/10 p-4 items-center space-x-4 bg-black/50 backdrop-blur-sm shadow-2xl"
@@ -160,14 +172,17 @@ const SkeletonCheckout = () => {
 const SkeletonPayouts = () => {
   const globeRef = useRef(null);
 
-  useGSAP(() => {
-    gsap.to(globeRef.current, {
-      rotate: 360,
-      duration: 20,
-      repeat: -1,
-      ease: "none"
-    });
-  }, { scope: globeRef });
+  useGSAP(
+    () => {
+      gsap.to(globeRef.current, {
+        rotate: 360,
+        duration: 20,
+        repeat: -1,
+        ease: "none",
+      });
+    },
+    { scope: globeRef }
+  );
 
   return (
     <div className="flex flex-1 w-full h-full min-h-24 relative items-center justify-center overflow-hidden">
@@ -176,14 +191,16 @@ const SkeletonPayouts = () => {
       </div>
       <div className="absolute inset-0 flex items-center justify-center">
         {[1, 2, 3].map((i) => (
-          <div 
+          <div
             key={i}
             className={cn(
               "absolute h-2 w-2 rounded-full",
-              i === 1 ? "bg-teal shadow-[0_0_10px_rgba(45,212,191,0.5)]" : "bg-blue shadow-[0_0_10px_rgba(59,130,246,0.5)] opacity-50"
+              i === 1
+                ? "bg-teal shadow-[0_0_10px_rgba(45,212,191,0.5)]"
+                : "bg-blue shadow-[0_0_10px_rgba(59,130,246,0.5)] opacity-50"
             )}
             style={{
-              animation: `pulse ${2 + i}s infinite ease-in-out`
+              animation: `pulse ${2 + i}s infinite ease-in-out`,
             }}
           />
         ))}
@@ -218,33 +235,30 @@ const SkeletonRamps = () => {
           <div className="h-12 w-12 rounded-full border border-white/10 flex items-center justify-center bg-blue2/10">
             <span className="text-white font-bold text-lg">$</span>
           </div>
-          <span className="text-[10px] text-white/40 uppercase font-mono">Fiat</span>
+          <span className="text-[11px] text-white/40 uppercase font-mono">Fiat</span>
         </div>
-        <ArrowRightLeft className="text-blue2 h-6 w-6 animate-spin-slow" />
+        <ArrowRightLeft className="text-blue2 h-6 w-6" />
         <div className="flex flex-col items-center space-y-2">
           <div className="h-12 w-12 rounded-full border border-white/10 flex items-center justify-center bg-blue/10">
-             <div className="h-6 w-6 rounded-full border-2 border-blue border-t-transparent animate-spin" />
+            <div className="h-6 w-6 rounded-full border-2 border-blue border-t-transparent animate-spin" />
           </div>
-          <span className="text-[10px] text-white/40 uppercase font-mono">Crypto</span>
+          <span className="text-[11px] text-white/40 uppercase font-mono">Crypto</span>
         </div>
       </div>
     </div>
   );
 };
 
-const SkeletonWhiteLabel = () => {
+const SkeletonLinks = () => {
   return (
-    <div className="flex flex-1 w-full h-full min-h-24 p-4 flex-col space-y-4">
-      <div className="flex items-center space-x-3">
-        <Settings className="h-5 w-5 text-zinc-500" />
-        <div className="h-2 w-24 bg-white/10 rounded-full" />
-      </div>
-      <div className="grid grid-cols-2 gap-2">
-        <div className="h-20 rounded-xl bg-white/5 border border-white/10 p-3 flex flex-col justify-end">
-          <div className="h-1.5 w-12 bg-white/10 rounded-full" />
+    <div className="flex flex-1 w-full h-full min-h-24 items-center justify-center p-4">
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-16 h-16 rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center">
+          <Link2 className="h-7 w-7 text-zinc-500" />
         </div>
-        <div className="h-20 rounded-xl bg-white/5 border border-white/10 p-3 flex flex-col justify-end">
-          <div className="h-1.5 w-12 bg-white/10 rounded-full" />
+        <div className="flex flex-col items-center gap-1.5">
+          <div className="h-2 w-24 bg-white/10 rounded-full" />
+          <div className="h-2 w-16 bg-white/5 rounded-full" />
         </div>
       </div>
     </div>
@@ -253,41 +267,46 @@ const SkeletonWhiteLabel = () => {
 
 const products = [
   {
-    title: "Useroutr Gateway",
+    title: "Gateway",
     slug: "gateway",
-    description: "Accept credit cards, ACH/SEPA, and 20+ crypto assets in one low-latency session. PCI-DSS compliance is handled entirely by our infrastructure.",
+    description:
+      "Accept credit cards, bank transfers, and 20+ crypto assets in a single checkout session. One integration, every payment method.",
     header: <SkeletonCheckout />,
     icon: <CreditCard className="h-4 w-4 text-neutral-500" />,
     span: "md:col-span-2 lg:col-span-2",
   },
   {
-    title: "Useroutr Payouts",
+    title: "Payouts",
     slug: "payouts",
-    description: "Bulk payout API for bank accounts and mobile money providers. Automatic FX conversion with real-time status tracking.",
+    description:
+      "Send money to bank accounts and mobile wallets in 174 countries. Automatic currency conversion with real-time tracking.",
     header: <SkeletonPayouts />,
     icon: <Globe className="h-4 w-4 text-neutral-500" />,
     span: "md:col-span-1 lg:col-span-1",
   },
   {
-    title: "Useroutr Invoicing",
+    title: "Invoicing",
     slug: "invoicing",
-    description: "Professional billing workflow with automatic reconciliation. HTLC-secured payments mapped to your order lifecycle.",
+    description:
+      "Create and send professional invoices that accept fiat and crypto. Automatic reconciliation when payments arrive.",
     header: <SkeletonInvoicing />,
     icon: <FileText className="h-4 w-4 text-neutral-500" />,
     span: "md:col-span-1 lg:col-span-1",
   },
   {
-    title: "Useroutr On/Off Ramp",
-    description: "Bridge fiat and crypto natively. Licensed anchor network connectivity across 174 countries for instant on-chain liquidity.",
+    title: "On/Off Ramp",
+    description:
+      "Convert between fiat and crypto seamlessly. Connected to licensed partners across 174 countries for instant liquidity.",
     header: <SkeletonRamps />,
     icon: <RefreshCw className="h-4 w-4 text-neutral-500" />,
     span: "md:col-span-1 lg:col-span-1",
   },
   {
-    title: "Useroutr Links",
-    description: "No-code payment links for invoices or e-commerce. Share via URL, QR code, or social, with full conversion tracking.",
-    header: <SkeletonWhiteLabel />,
-    icon: <Palette className="h-4 w-4 text-neutral-500" />,
+    title: "Payment Links",
+    description:
+      "Create shareable payment links in seconds — no code required. Share via URL, QR code, or embed anywhere.",
+    header: <SkeletonLinks />,
+    icon: <Link2 className="h-4 w-4 text-neutral-500" />,
     span: "md:col-span-2 lg:col-span-1",
   },
 ];

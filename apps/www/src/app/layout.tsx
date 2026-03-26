@@ -24,17 +24,19 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Useroutr — The Institutional Payment Protocol for Universal Asset Finality",
+  title: "Useroutr - Pay anything, Settle Everywhere.",
   description:
-    "Institutional payment infrastructure for cross-chain asset finality. Accept any currency from any chain and settle globally in seconds with Useroutr's atomic gateway.",
+    "Useroutr unifies fiat and crypto payments into one API. Accept cards, bank transfers, and 20+ crypto assets — settle globally in seconds on Stellar.",
   keywords: [
-    "Institutional Payments",
-    "Cross-chain Settlement",
-    "Stellar Anchor Network",
-    "Atomic Finality",
+    "Payment Infrastructure",
+    "Crypto Payments",
+    "Fiat Payments",
+    "Cross-chain Payments",
     "Payment Gateway",
-    "Blockchain Infrastructure",
-    "Useroutr Protocol"
+    "Stellar Blockchain",
+    "Useroutr",
+    "Payment API",
+    "Useroutr Protocol",
   ],
   authors: [{ name: "Useroutr Labs" }],
   creator: "Useroutr Labs",
@@ -44,21 +46,22 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://useroutr.com"),
+  metadataBase: new URL("https://useroutr.io"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "Useroutr — Pay anything. Settle everywhere.",
-    description: "The payment infrastructure built for both sides of finance. Accept any currency from any chain. Settle globally in seconds.",
-    url: "https://useroutr.com",
+    description:
+      "One API for fiat and crypto payments. Accept any currency, settle globally in seconds.",
+    url: "https://useroutr.io",
     siteName: "Useroutr",
     images: [
       {
-        url: "/og-image.jpg", // Placeholder - the user should add a real high-res image
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Useroutr Protocol Overview",
+        alt: "Useroutr - Unified Payment Infrastructure",
       },
     ],
     locale: "en_US",
@@ -66,8 +69,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Useroutr — Institutional Asset Finality",
-    description: "High-throughput payment protocol for universal asset finality and atomic settlement.",
+    title: "Useroutr — Pay anything. Settle everywhere.",
+    description:
+      "One API for fiat and crypto payments. Accept any currency, settle globally in seconds.",
     creator: "@useroutr",
     images: ["/twitter-image.jpg"],
   },
@@ -90,14 +94,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html 
-      lang="en" 
+    <html
+      lang="en"
       className={cn(
         "dark selection:bg-blue/30 selection:text-white",
         syne.variable,
         newsreader.variable,
-        jetbrains.variable
-      )} 
+        jetbrains.variable,
+      )}
     >
       <body className="antialiased">
         <StructuredData />

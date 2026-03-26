@@ -65,20 +65,24 @@ body {
 
 body {
   font-family: var(--serif);
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.65;
   position: relative;
 }
 
-/* Grain Overlay */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='0.04'/%3E%3C/svg%3E"); */
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.5;
+@media (min-width: 640px) {
+  body {
+    font-size: 17px;
+  }
+}
+
+/* Scrollbar styling */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 @theme inline {

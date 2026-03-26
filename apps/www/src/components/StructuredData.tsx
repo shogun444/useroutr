@@ -12,7 +12,7 @@ export function StructuredData() {
       "https://github.com/useroutr",
       "https://linkedin.com/company/useroutr"
     ],
-    "description": "Institutional payment infrastructure for universal asset finality and atomic settlement."
+    "description": "Unified payment infrastructure for fiat and crypto. Accept any currency, settle globally in seconds on Stellar."
   };
 
   const softwareSchema = {
@@ -21,7 +21,7 @@ export function StructuredData() {
     "name": "Useroutr Protocol",
     "applicationCategory": "FinancialApplication",
     "operatingSystem": "Web",
-    "abstract": "A high-throughput decentralized payment protocol built for institutional-grade cross-chain finality.",
+    "abstract": "One API for fiat and crypto payments. Accept cards, bank transfers, and digital assets — settle globally in seconds.",
     "offers": {
       "@type": "Offer",
       "price": "0",
