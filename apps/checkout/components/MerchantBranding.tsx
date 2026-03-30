@@ -1,30 +1,23 @@
 interface MerchantBrandingProps {
-  name?: string;
-  logo?: string;
+  merchantName: string;
+  merchantLogo?: string;
 }
 
-export function MerchantBranding({ name, logo }: MerchantBrandingProps) {
+export function MerchantBranding({ merchantName, merchantLogo }: MerchantBrandingProps) {
   return (
     <div className="text-center">
-      {logo ? (
-        // eslint-disable-next-line @next/next/no-img-element
+      {merchantLogo ? (
         <img
-          src={logo}
-          alt={name ?? "Merchant logo"}
-          width={40}
-          height={40}
-          className="mx-auto rounded-lg object-contain"
+          src={merchantLogo}
+          alt={merchantName}
+          className="mx-auto h-10 w-10 rounded-lg object-cover"
         />
       ) : (
-        <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-          <span className="font-display text-sm font-bold">
-            {name ? name[0].toUpperCase() : "T"}
-          </span>
+        <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-lg font-bold text-primary-foreground">
+          {merchantName.charAt(0).toUpperCase()}
         </div>
       )}
-      <p className="mt-2 font-display text-sm font-semibold text-foreground">
-        {name ?? "Tavvio"}
-      </p>
+      <p className="mt-2 text-sm font-medium text-foreground">{merchantName}</p>
     </div>
   );
 }
